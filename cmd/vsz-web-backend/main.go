@@ -45,7 +45,10 @@ func main() {
 
 	// create route for client
 	r.Route("/client", func(r chi.Router) {
-		r.Use(auth.CheckLoggedIn())
+		//r.Use(auth.CheckLoggedIn())
+		r.Get("/opdrachtgever", client.GetOpdrachtgever)
+		r.Get("/kruisingen", client.GetKruisingen)
+		r.Get("/autos", client.GetAutos)
 		r.Post("/logout", client.Logout)
 	})
 
