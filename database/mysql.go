@@ -53,6 +53,24 @@ func GetOpdrachtgeverByID(id int) (*vsz_web_backend.Opdrachtgever, error) {
 	}
 }
 
+func GetOpdrachtgeverByEmail(email string) (*vsz_web_backend.Opdrachtgever, error) {
+	res, err := db.Query("SELECT * FROM Opdrachtgever WHERE email = ?", email)
+	if err != nil {
+		return nil, err
+	}
+
+	if res.Next() {
+		var opdrachtgever vsz_web_backend.Opdrachtgever
+		err := res.Scan(&opdrachtgever.Bedrijfscode, &opdrachtgever.Bedrijfsnaam, &opdrachtgever.Email, &opdrachtgever.Wachtwoord)
+		if err != nil {
+			return nil, err
+		}
+		return &opdrachtgever, nil
+	} else {
+		return nil, nil
+	}
+}
+
 func GetOpdrachtgevers() ([]vsz_web_backend.Opdrachtgever, error) {
 	res, err := db.Query("SELECT * FROM Opdrachtgever")
 	if err != nil {
