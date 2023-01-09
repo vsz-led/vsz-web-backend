@@ -117,7 +117,7 @@ func GetKruisingen() ([]vsz_web_backend.Kruising, error) {
 	var kruisingen []vsz_web_backend.Kruising
 	for res.Next() {
 		var kruising vsz_web_backend.Kruising
-		err := res.Scan(&kruising.Kruisingscode, &kruising.Plaats, &kruising.Latitude, &kruising.Longitude, &kruising.Weg, &kruising.Bedrijfscode, &kruising.Laatst_Opgestart)
+		err := res.Scan(&kruising.Kruisingscode, &kruising.Plaats, &kruising.Latitude, &kruising.Longitude, &kruising.Weg, &kruising.Bedrijfscode, &kruising.Laatst_Opgestart, &kruising.Plaatsing)
 		if err != nil {
 			return nil, err
 		}

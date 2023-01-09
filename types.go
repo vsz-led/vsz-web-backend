@@ -15,6 +15,7 @@ type Kruising struct {
 	Weg              string
 	Bedrijfscode     int
 	Laatst_Opgestart string
+	Plaatsing        string
 }
 
 type Auto struct {
