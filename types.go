@@ -19,10 +19,11 @@ type Kruising struct {
 }
 
 type Auto struct {
-	Autocode      int
-	DatumTijd     string
-	Richting      string
-	Kruisingscode int
+	Autocode int
+	Datum    string
+	Tijd     string
+	Richting string
+	Weg      string
 }
 
 type Session struct {
