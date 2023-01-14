@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"time"
@@ -142,6 +143,26 @@ func GetAutosWeek() ([]int, error) {
 			return nil, err
 		}
 		autos = append(autos, aantal)
+	}
+
+	return autos, nil
+}
+
+func GetAutosMaand() (int, error) {
+	var autos int
+
+	res, err := db.Query("SELECT COUNT(*) FROM Auto WHERE MONTH(datumtijd) = MONTH(CURDATE())")
+	if err != nil {
+		return autos, err
+	}
+
+	if res.Next() {
+		err := res.Scan(&autos)
+		if err != nil {
+			return autos, err
+		}
+	} else {
+		return autos, errors.New("no results")
 	}
 
 	return autos, nil
