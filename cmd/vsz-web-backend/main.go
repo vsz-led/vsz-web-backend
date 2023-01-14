@@ -47,6 +47,7 @@ func main() {
 	r.Route("/client", func(r chi.Router) {
 		//r.Use(auth.CheckLoggedIn())
 		r.Get("/opdrachtgever", client.GetOpdrachtgever)
+		r.Get("/opdrachtgevercount", client.GetOpdrachtgeverCount)
 		r.Get("/kruisingen", client.GetKruisingen)
 		r.Get("/autos", client.GetAutos)
 		r.Get("/autosweek", client.GetAutosWeek)

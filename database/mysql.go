@@ -91,6 +91,26 @@ func GetOpdrachtgevers() ([]vsz_web_backend.Opdrachtgever, error) {
 	return opdrachtgevers, nil
 }
 
+func GetOpdrachtgeverCount() (int, error) {
+	var aantal int
+
+	res, err := db.Query("SELECT COUNT(*) FROM Opdrachtgever")
+	if err != nil {
+		return aantal, err
+	}
+
+	if res.Next() {
+		err := res.Scan(&aantal)
+		if err != nil {
+			return aantal, err
+		}
+	} else {
+		return aantal, errors.New("no results")
+	}
+
+	return aantal, nil
+}
+
 func GetKruisingen() ([]vsz_web_backend.Kruising, error) {
 	res, err := db.Query("SELECT kruisingscode,bedrijfsnaam,plaats,weg,plaatsing,laatst_opgestart FROM Kruising JOIN Opdrachtgever ON Kruising.bedrijfscode=Opdrachtgever.bedrijfscode")
 	if err != nil {

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 	"vsz-web-backend"
 	"vsz-web-backend/database"
 )
@@ -26,4 +27,15 @@ func GetOpdrachtgever(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write(data)
+}
+
+func GetOpdrachtgeverCount(w http.ResponseWriter, r *http.Request) {
+	opdrachtgevers, err := database.GetOpdrachtgeverCount()
+	if err != nil {
+		log.Printf("failed to fetch opdrachtgevers: %s", err)
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
+
+	w.Write([]byte(strconv.Itoa(opdrachtgevers)))
 }
