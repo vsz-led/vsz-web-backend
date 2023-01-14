@@ -52,6 +52,7 @@ func main() {
 		r.Get("/autosweek", client.GetAutosWeek)
 		r.Get("/autosmaand", client.GetAutosMaand)
 		r.Get("/autoskruising", client.GetAutosKruising)
+		r.Get("/autosopdrachtgever", client.GetAutosOpdrachtgever)
 		r.Post("/logout", client.Logout)
 	})
 

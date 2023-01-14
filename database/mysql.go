@@ -187,3 +187,23 @@ func GetAutosKruising() (map[string]float64, error) {
 
 	return autos, nil
 }
+
+func GetAutosOpdrachtgever() (map[string]float64, error) {
+	res, err := db.Query("SELECT bedrijfsnaam, COUNT(*)*100/t.s AS percentage FROM Auto JOIN Kruising ON Auto.kruisingscode=Kruising.kruisingscode JOIN Opdrachtgever ON Kruising.bedrijfscode=Opdrachtgever.bedrijfscode CROSS JOIN (SELECT COUNT(*) AS s FROM Auto) t GROUP BY bedrijfsnaam")
+	if err != nil {
+		return nil, err
+	}
+
+	var autos = make(map[string]float64)
+	for res.Next() {
+		var percentage float64
+		var bedrijfsnaam string
+		err := res.Scan(&bedrijfsnaam, &percentage)
+		if err != nil {
+			return nil, err
+		}
+		autos[bedrijfsnaam] = percentage
+	}
+
+	return autos, nil
+}
