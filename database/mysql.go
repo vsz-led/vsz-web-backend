@@ -127,3 +127,22 @@ func GetAutos() ([]vsz_web_backend.Auto, error) {
 
 	return autos, nil
 }
+
+func GetAutosWeek() ([]int, error) {
+	res, err := db.Query("SELECT COUNT(*) FROM Auto GROUP BY DAY(datumtijd) ORDER BY DAY(datumtijd) DESC LIMIT 7")
+	if err != nil {
+		return nil, err
+	}
+
+	var autos []int
+	for res.Next() {
+		var aantal int
+		err := res.Scan(&aantal)
+		if err != nil {
+			return nil, err
+		}
+		autos = append(autos, aantal)
+	}
+
+	return autos, nil
+}
