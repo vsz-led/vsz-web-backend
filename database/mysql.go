@@ -90,26 +90,8 @@ func GetOpdrachtgevers() ([]vsz_web_backend.Opdrachtgever, error) {
 	return opdrachtgevers, nil
 }
 
-func GetKruisingByID(id int) (*vsz_web_backend.Kruising, error) {
-	res, err := db.Query("SELECT * FROM Kruising WHERE id = ?", id)
-	if err != nil {
-		return nil, err
-	}
-
-	if res.Next() {
-		var kruising vsz_web_backend.Kruising
-		err := res.Scan(&kruising.Kruisingscode, &kruising.Plaats, &kruising.Latitude, &kruising.Longitude, &kruising.Weg, &kruising.Bedrijfscode, &kruising.Laatst_Opgestart)
-		if err != nil {
-			return nil, err
-		}
-		return &kruising, nil
-	} else {
-		return nil, nil
-	}
-}
-
 func GetKruisingen() ([]vsz_web_backend.Kruising, error) {
-	res, err := db.Query("SELECT * FROM Kruising")
+	res, err := db.Query("SELECT kruisingscode,bedrijfsnaam,plaats,weg,plaatsing,laatst_opgestart FROM Kruising JOIN Opdrachtgever ON Kruising.bedrijfscode=Opdrachtgever.bedrijfscode")
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +99,7 @@ func GetKruisingen() ([]vsz_web_backend.Kruising, error) {
 	var kruisingen []vsz_web_backend.Kruising
 	for res.Next() {
 		var kruising vsz_web_backend.Kruising
-		err := res.Scan(&kruising.Kruisingscode, &kruising.Plaats, &kruising.Latitude, &kruising.Longitude, &kruising.Weg, &kruising.Bedrijfscode, &kruising.Laatst_Opgestart, &kruising.Plaatsing)
+		err := res.Scan(&kruising.Kruisingscode, &kruising.Bedrijfsnaam, &kruising.Plaats, &kruising.Weg, &kruising.Plaatsing, &kruising.Laatst_Opgestart)
 		if err != nil {
 			return nil, err
 		}
