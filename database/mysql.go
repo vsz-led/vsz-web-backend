@@ -128,7 +128,7 @@ func GetKruisingen() ([]vsz_web_backend.Kruising, error) {
 }
 
 func GetAutos() ([]vsz_web_backend.Auto, error) {
-	res, err := db.Query("SELECT autocode, DATE(datumtijd), TIME(datumtijd), richting, weg FROM Auto JOIN Kruising ON Auto.kruisingscode=Kruising.kruisingscode")
+	res, err := db.Query("SELECT autocode, DATE(datumtijd), TIME(datumtijd), richting, weg FROM Auto JOIN Kruising ON Auto.kruisingscode=Kruising.kruisingscode ORDER BY datumtijd")
 	if err != nil {
 		return nil, err
 	}
