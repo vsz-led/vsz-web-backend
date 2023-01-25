@@ -42,6 +42,8 @@ func GetOpdrachtgeverByID(id int) (*vsz_web_backend.Opdrachtgever, error) {
 		return nil, err
 	}
 
+	defer res.Close()
+
 	if res.Next() {
 		var opdrachtgever vsz_web_backend.Opdrachtgever
 		err := res.Scan(&opdrachtgever.Bedrijfscode, &opdrachtgever.Bedrijfsnaam, &opdrachtgever.Email, &opdrachtgever.Wachtwoord)
@@ -60,6 +62,8 @@ func GetOpdrachtgeverByEmail(email string) (*vsz_web_backend.Opdrachtgever, erro
 		return nil, err
 	}
 
+	defer res.Close()
+
 	if res.Next() {
 		var opdrachtgever vsz_web_backend.Opdrachtgever
 		err := res.Scan(&opdrachtgever.Bedrijfscode, &opdrachtgever.Bedrijfsnaam, &opdrachtgever.Email, &opdrachtgever.Wachtwoord)
@@ -77,6 +81,8 @@ func GetOpdrachtgevers() ([]vsz_web_backend.Opdrachtgever, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	defer res.Close()
 
 	var opdrachtgevers []vsz_web_backend.Opdrachtgever
 	for res.Next() {
@@ -99,6 +105,8 @@ func GetOpdrachtgeverCount() (int, error) {
 		return aantal, err
 	}
 
+	defer res.Close()
+
 	if res.Next() {
 		err := res.Scan(&aantal)
 		if err != nil {
@@ -116,6 +124,8 @@ func GetKruisingen() ([]vsz_web_backend.Kruising, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	defer res.Close()
 
 	var kruisingen []vsz_web_backend.Kruising
 	for res.Next() {
@@ -136,6 +146,8 @@ func GetAutos() ([]vsz_web_backend.Auto, error) {
 		return nil, err
 	}
 
+	defer res.Close()
+
 	var autos []vsz_web_backend.Auto
 	for res.Next() {
 		var auto vsz_web_backend.Auto
@@ -154,6 +166,8 @@ func GetAutosWeek() ([]int, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	defer res.Close()
 
 	var autos []int
 	for res.Next() {
@@ -176,6 +190,8 @@ func GetAutosMaand() (int, error) {
 		return autos, err
 	}
 
+	defer res.Close()
+
 	if res.Next() {
 		err := res.Scan(&autos)
 		if err != nil {
@@ -193,6 +209,8 @@ func GetAutosKruising() (map[string]float64, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	defer res.Close()
 
 	var autos = make(map[string]float64)
 	for res.Next() {
@@ -213,6 +231,8 @@ func GetAutosOpdrachtgever() (map[string]float64, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	defer res.Close()
 
 	var autos = make(map[string]float64)
 	for res.Next() {
